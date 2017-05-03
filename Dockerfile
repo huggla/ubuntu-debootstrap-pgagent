@@ -6,4 +6,4 @@ RUN apt-get update \
 
 ENV CONNECT_STRING=''
 
-CMD pgagent -f -l 1 $CONNECT_STRING 
+CMD ["pgagent", "-f", "-l 1", $CONNECT_STRING] 
