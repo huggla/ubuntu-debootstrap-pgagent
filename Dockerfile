@@ -11,4 +11,4 @@ ENV DBNAME=''
 ENV USER=postgres
 ENV PASSWORD=''
 
-CMD start-pgagent 
+CMD ["start-pgagent"]
