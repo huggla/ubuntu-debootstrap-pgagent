@@ -20,5 +20,6 @@ ENV USER=postgres
 
 VOLUME /run/secrets
 
-CMD ["/usr/bin/start-pgagent"]
+CMD /usr/bin/start-pgagent
+
 USER nobody
