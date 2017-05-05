@@ -22,6 +22,6 @@ VOLUME /run/secrets
 
 USER nobody
 
-CMD /usr/bin/start-pgagent
+CMD ["/usr/bin/start-pgagent"]
 
 
