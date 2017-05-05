@@ -11,7 +11,7 @@ RUN apt-get update \
  #&& chown root:pgagent /usr/bin/start-pgagent \
  && chmod 6711 /usr/bin/start-pgagent \
  && echo 'read PASSWORD < /run/secrets/postgres-pw' >> /usr/bin/start-pgagent \
- && echo '/usr/bin/pgagent hostaddr=$HOSTADDR dbname=$DBNAME user=$USER password=$PASSWORD' >> /usr/bin/start-pgagent \
+ && echo '/usr/bin/pgagent -f hostaddr=$HOSTADDR dbname=$DBNAME user=$USER password=$PASSWORD' >> /usr/bin/start-pgagent \
  && chmod ugo+r /usr/bin/start-pgagent
 
 ENV HOSTADDR=''
@@ -20,6 +20,8 @@ ENV USER=postgres
 
 VOLUME /run/secrets
 
+USER nobody
+
 CMD /usr/bin/start-pgagent
 
-USER nobody
+
