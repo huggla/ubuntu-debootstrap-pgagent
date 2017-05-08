@@ -3,16 +3,15 @@ FROM blitznote/debootstrap-amd64:16.04
 RUN apt-get update \
  && apt-get install -y pgagent \
  && rm -rf /var/lib/apt/lists/* \
- #&& useradd -m pgagent \
+ && useradd -m postgres \
  && mkdir /run/secrets \
  && touch /run/secrets/postgres-pw \
  && chmod u=r,go= /run/secrets/postgres-pw \
  && echo '#!/bin/sh' > /usr/bin/start-pgagent \
- #&& chown root:pgagent /usr/bin/start-pgagent \
- && chmod 6711 /usr/bin/start-pgagent \
- #&& echo 'read PASSWORD < /run/secrets/postgres-pw' >> /usr/bin/start-pgagent \
- && echo '/usr/bin/pgagent -f hostaddr=$HOSTADDR dbname=$DBNAME user=$USER password= << /run/secrets/postgres-pw' >> /usr/bin/start-pgagent \
- && chmod ugo+r /usr/bin/start-pgagent
+ && chown postgres:postgres /usr/bin/start-pgagent \
+ && chmod 6755 /usr/bin/start-pgagent \
+ && echo 'mkfifo --mode=600 /home/postgres/.pgpass { echo "*:*:*:*:"`cat /run/secrets/postgres-pw` } >/home/postgres/.pgpass &' >> /usr/bin/start-pgagent \
+ && echo '/usr/bin/pgagent -f hostaddr=$HOSTADDR dbname=$DBNAME user=$USER' >> /usr/bin/start-pgagent
 
 ENV HOSTADDR=''
 ENV DBNAME=postgres
@@ -23,5 +22,3 @@ VOLUME /run/secrets
 USER nobody
 
 CMD ["/usr/bin/start-pgagent"]
-
-
