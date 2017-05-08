@@ -3,7 +3,7 @@ FROM blitznote/debootstrap-amd64:16.04
 RUN apt-get update \
  && apt-get install -y pgagent \
  && rm -rf /var/lib/apt/lists/* \
- && useradd --create-home --uid 70 --gid 70 postgres \
+ && useradd --create-home --user-group --uid 70 --gid 70 postgres \
  && mkdir /run/secrets \
  && touch /run/secrets/postgres-pw \
  && chmod u=r,go= /run/secrets/postgres-pw \
