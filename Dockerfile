@@ -11,7 +11,10 @@ RUN apt-get update \
  && echo '#!/bin/sh' > /usr/bin/start-pgagent \
  && chown postgres:postgres /usr/bin/start-pgagent \
  && chmod 6755 /usr/bin/start-pgagent \
- && echo 'mkfifo --mode=600 /home/postgres/.pgpass { echo "*:*:*:*:"`cat /run/secrets/postgres-pw` } >/home/postgres/.pgpass &' >> /usr/bin/start-pgagent \
+ && echo 'mkfifo --mode=600 /home/postgres/.pgpass' >> /usr/bin/start-pgagent \
+ && echo '{' >> /usr/bin/start-pgagent \
+ && echo 'echo "*:*:*:*:"`cat /run/secrets/postgres-pw`' >> /usr/bin/start-pgagent \
+ && echo '} >/home/postgres/.pgpass &' >> /usr/bin/start-pgagent \
  && echo '/usr/bin/pgagent -f hostaddr=$HOSTADDR dbname=$DBNAME user=$USER' >> /usr/bin/start-pgagent \
  && echo 'rm /home/postgres/.pgpass' >> /usr/bin/start-pgagent
 
