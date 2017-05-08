@@ -9,10 +9,16 @@ RUN apt-get update \
  && touch /run/secrets/postgres-pw \
  && chown postgres:postgres /run/secrets/postgres-pw \
  && chmod u=r,go= /run/secrets/postgres-pw \
+ && echo -n "*:*:*:*:" > /home/postgres/.pgpass-pre \
+ && chown postgres:postgres /home/postgres/.pgpass-pre \
+ && chmod u=rw,go= /home/postgres/.pgpass-pre \
+ && touch /home/postgres/.pgpass \
+ && chown postgres:postgres /home/postgres/.pgpass \
+ && chmod u=rw,go= /home/postgres/.pgpass \
  && echo '#!/bin/sh' > /usr/bin/start-pgagent \
  && chown postgres:postgres /usr/bin/start-pgagent \
  && chmod 6755 /usr/bin/start-pgagent \
- && echo 'echo "*:*:*:*:"`cat /run/secrets/postgres-pw` > /home/postgres/.pgpass' >> /usr/bin/start-pgagent \
+ && echo 'cat /home/postgres/.pgpass-pre /run/secrets/postgres-pw > /home/postgres/.pgpass' >> /usr/bin/start-pgagent \
  && echo '/usr/bin/pgagent -f hostaddr=$HOSTADDR dbname=$DBNAME user=$USER' >> /usr/bin/start-pgagent
 
 ENV HOSTADDR=''
