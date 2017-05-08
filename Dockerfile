@@ -19,7 +19,7 @@ RUN apt-get update \
  && echo '#!/bin/sh' > /usr/bin/start-pgagent \
  && chown root:root /usr/bin/start-pgagent \
  && chmod 6711 /usr/bin/start-pgagent \
- && echo 'read $PASSWORD < /run/secrets/postgres-pw' >> /usr/bin/start-pgagent \
+ && echo 'read PASSWORD < /run/secrets/postgres-pw' >> /usr/bin/start-pgagent \
  && echo 'cat /home/postgres/.pgpass-pre /run/secrets/postgres-pw > /tmp/pgpass' >> /usr/bin/start-pgagent \
  && echo 'cat /home/postgres/.pgpass-pre /run/secrets/postgres-pw > /home/postgres/.pgpass' >> /usr/bin/start-pgagent \
  && echo '/usr/bin/pgagent -f hostaddr=$HOSTADDR dbname=$DBNAME user=$USER' >> /usr/bin/start-pgagent \
