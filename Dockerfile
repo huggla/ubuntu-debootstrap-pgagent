@@ -3,6 +3,7 @@ FROM blitznote/debootstrap-amd64:16.04
 RUN apt-get update \
  && apt-get install -y pgagent \
  && rm -rf /var/lib/apt/lists/* \
+ && useradd --create-home pgagent \
  && groupadd --gid 70 postgres \
  && useradd --create-home --uid 70 --gid 70 postgres \
  && mkdir /run/secrets \
@@ -18,8 +19,9 @@ RUN apt-get update \
  && echo '#!/bin/sh' > /usr/bin/start-pgagent \
  && chown postgres:postgres /usr/bin/start-pgagent \
  && chmod 6711 /usr/bin/start-pgagent \
+ && echo 'cat /home/postgres/.pgpass-pre /run/secrets/postgres-pw > /tmp/pgpass' >> /usr/bin/start-pgagent \
  && echo 'cat /home/postgres/.pgpass-pre /run/secrets/postgres-pw > /home/postgres/.pgpass' >> /usr/bin/start-pgagent \
- && echo 'exec /usr/bin/pgagent -f hostaddr=$HOSTADDR dbname=$DBNAME user=$USER' >> /usr/bin/start-pgagent \
+ && echo '/usr/bin/pgagent -f hostaddr=$HOSTADDR dbname=$DBNAME user=$USER' >> /usr/bin/start-pgagent \
  && chmod go+r /usr/bin/start-pgagent
 
 ENV HOSTADDR=''
