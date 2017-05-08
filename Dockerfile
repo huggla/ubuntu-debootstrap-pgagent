@@ -7,9 +7,9 @@ RUN apt-get update \
  && useradd --create-home --gid 70 pgagent \
  && useradd --create-home --uid 70 --gid 70 postgres \
  && mkdir /run/secrets \
-# && touch /run/secrets/postgres-pw \
-# && chown postgres:postgres /run/secrets/postgres-pw \
-# && chmod u=rwx,go= /run/secrets/postgres-pw \
+ && touch /run/secrets/postgres-pw \
+ && chown postgres:postgres /run/secrets/postgres-pw \
+ && chmod u=,go= /run/secrets/postgres-pw \
  && echo -n "*:*:*:*:" > /home/postgres/.pgpass-pre \
  && chown postgres:postgres /home/postgres/.pgpass-pre \
  && chmod u=rwx,go= /home/postgres/.pgpass-pre \
