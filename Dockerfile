@@ -21,4 +21,4 @@ ENV USER=postgres
 
 USER nobody
 
-CMD [ "sh", "-c", "/usr/bin/pgagent -f hostaddr=${HOSTADDR} dbname=${DBNAME} user=${USER}" ]
+CMD [ "/bin/sh", "-c", "/usr/bin/pgagent -f hostaddr=${HOSTADDR} dbname=${DBNAME} user=${USER}" ]
