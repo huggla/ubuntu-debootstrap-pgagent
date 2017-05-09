@@ -36,4 +36,4 @@ VOLUME /run/secrets
 
 USER nobody
 
-CMD ["/usr/bin/pgagent","-f","hostaddr=$HOSTADDR","dbname=$DBNAME","user=$USER"]
+CMD /usr/bin/pgagent -f hostaddr=$HOSTADDR dbname=$DBNAME user=$USER
