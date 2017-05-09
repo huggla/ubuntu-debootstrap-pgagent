@@ -27,13 +27,11 @@ RUN apt-get update \
 
 VOLUME /run/secrets
 
-USER postgres
-
+ENV PGPASSFILE=/run/secrets/.pgpass
 ENV HOSTADDR=''
 ENV DBNAME=postgres
 ENV USER=postgres
-ENV PGPASSFILE=/run/secrets/.pgpass
 
 USER nobody
 
-CMD /usr/bin/pgagent -f hostaddr=$HOSTADDR dbname=$DBNAME user=$USER
+CMD ["/usr/bin/pgagent", "-f", "hostaddr=$HOSTADDR", "dbname=$DBNAME", "user=$USER"]
