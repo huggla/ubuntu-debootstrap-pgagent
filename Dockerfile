@@ -18,7 +18,7 @@ RUN apt-get update \
  #&& chmod u=rw,go= /home/postgres/.pgpass \
  #&& echo '#!/bin/sh' > /usr/bin/start-pgagent \
  && chown postgres:postgres /usr/bin/pgagent \
- && chmod 6555 /usr/bin/pgagent \
+ && chmod 6555 /usr/bin/pgagent
  #&& echo 'read PASSWORD < /run/secrets/postgres-pw' >> /usr/bin/start-pgagent \
  #&& echo 'cat /home/postgres/.pgpass-pre /run/secrets/postgres-pw > /tmp/pgpass' >> /usr/bin/start-pgagent \
  #&& echo 'cat /home/postgres/.pgpass-pre /run/secrets/postgres-pw > /home/postgres/.pgpass' >> /usr/bin/start-pgagent \
